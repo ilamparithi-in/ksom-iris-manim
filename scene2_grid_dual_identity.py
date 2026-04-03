@@ -292,7 +292,11 @@ class Scene2GridDualIdentity(ThreeDScene):
         # ══════════════════════════════════════════════════════════════════════
         # PART 7 — MOVE WEIGHT VECTOR (grid stays fixed)
         # The always_redraw connection updates automatically.
+        # Camera begins slow horizontal rotation here.
         # ══════════════════════════════════════════════════════════════════════
+
+        # Slow horizontal (theta) rotation; near-zero vertical drift
+        self.begin_ambient_camera_rotation(rate=0.05, about="theta")
 
         w_target = w_init[focus_k] + np.array([-0.45, 0.40, -0.28])
         self.play(focus_w.animate.move_to(w_target), run_time=2.0)
@@ -320,6 +324,7 @@ class Scene2GridDualIdentity(ThreeDScene):
             run_time=2.5,
         )
         self.wait(0.5)
+        self.stop_ambient_camera_rotation()
 
         # Restore focus-node colours
         self.play(
