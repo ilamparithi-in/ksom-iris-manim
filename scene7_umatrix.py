@@ -220,6 +220,15 @@ class Scene7UMatrix(ThreeDScene):
             for i in range(len(DATA_PTS))
         ])
 
+        # ── Faint reference axes — data space (RIGHT, center x=2.2) ──────────
+        data_axes = ThreeDAxes(
+            x_range=[-2.2, 2.2, 1], y_range=[-2.2, 2.2, 1], z_range=[-2.2, 2.2, 1],
+            x_length=4.4, y_length=4.4, z_length=4.4,
+            tips=False,
+            axis_config={"stroke_color": GREY_D, "stroke_width": 0.6,
+                         "include_ticks": False},
+        ).shift(RIGHT * 2.2)
+
         lbl1 = Text("Interpreting the map", font_size=30, color=WHITE)
         lbl1.to_edge(UL, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl1)
@@ -229,6 +238,7 @@ class Scene7UMatrix(ThreeDScene):
             LaggedStart(*[FadeIn(d) for d in w_dots],    lag_ratio=0.04),
             LaggedStart(*[FadeIn(d) for d in data_dots], lag_ratio=0.006),
             FadeIn(lbl1),
+            FadeIn(data_axes),
             run_time=3.0,
         )
         self.wait(1.5)

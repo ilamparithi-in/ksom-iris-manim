@@ -140,12 +140,22 @@ class Scene6FinalMap(ThreeDScene):
             ]
         )
 
+        # ── Faint reference axes — data space (RIGHT, center x=2.2) ──────────
+        data_axes = ThreeDAxes(
+            x_range=[-2.2, 2.2, 1], y_range=[-2.2, 2.2, 1], z_range=[-2.2, 2.2, 1],
+            x_length=4.4, y_length=4.4, z_length=4.4,
+            tips=False,
+            axis_config={"stroke_color": GREY_D, "stroke_width": 0.6,
+                         "include_ticks": False},
+        ).shift(RIGHT * 2.2)
+
         lbl_data = Text("Training data", font_size=28, color=WHITE)
         lbl_data.to_edge(UR, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_data)
         self.play(
             LaggedStart(*[FadeIn(d) for d in data_dots], lag_ratio=0.006),
             FadeIn(lbl_data),
+            FadeIn(data_axes),
             run_time=2.5,
         )
         self.wait(1.0)

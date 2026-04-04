@@ -103,7 +103,16 @@ class Scene3BMU(ThreeDScene):
             for r in range(GRID_ROWS - 1) for c in range(GRID_COLS)
         ])
 
-        self.play(Create(h_lines), Create(v_lines), run_time=1.0)
+        # ── Faint reference axes — data space (RIGHT) ────────────────────────
+        data_axes = ThreeDAxes(
+            x_range=[-1.5, 1.5, 1], y_range=[-1.5, 1.5, 1], z_range=[-1.2, 1.2, 1],
+            x_length=3.0, y_length=3.0, z_length=2.4,
+            tips=False,
+            axis_config={"stroke_color": GREY_D, "stroke_width": 0.6,
+                         "include_ticks": False},
+        ).shift(RIGHT * 2.2)
+
+        self.play(Create(h_lines), Create(v_lines), FadeIn(data_axes), run_time=1.0)
         self.play(
             LaggedStart(*[FadeIn(d) for d in grid_nodes], lag_ratio=0.035),
             run_time=1.2,
