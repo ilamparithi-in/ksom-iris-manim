@@ -100,78 +100,38 @@ Structure, once hidden, is now visible.
 
 ---
 
-Now suppose we take this map one step further.
+We can go further.
 
-So far, everything has been unsupervised. The map has organized itself purely based on the structure of the data, without any knowledge of labels or categories.
+Once the map is formed, we can take any new data point and find its best matching unit. In doing so, we effectively assign it a position on the grid. This allows us to visualize not just the training data, but any new observation.
 
-But what if we do have labels?
+If labels are available, we can refine the map further.
 
-What if each data point belongs to a known class?
+This leads to Learning Vector Quantization, where nodes are adjusted not just based on similarity, but also correctness. If a node correctly represents a data point, it is pulled closer. If it misclassifies, it is pushed away. Over time, this sharpens the boundaries between classes.
 
-Instead of discarding the map we have learned, we can refine it.
+But even without labels, the self-organizing map already achieves something profound.
 
-Each node on the grid can now be assigned a label — typically based on the majority class of the data points it represents. At this point, the map is no longer just a representation of similarity. It becomes a rough classifier.
-
-But it is still imperfect.
-
-Some nodes may lie near class boundaries. Some may represent the wrong class. The structure is smooth, but the decision regions are not yet sharp.
-
-This is where **Learning Vector Quantization** comes in.
+It creates order from disorder.
 
 ---
 
-The idea is simple, but powerful.
+And this is the essence of Kohonen’s idea.
 
-We once again present data points to the network, one at a time. For each input, we find its best matching unit — just as before.
+Not merely clustering. Not merely dimensionality reduction.
 
-But now, we also compare their labels.
+But **self-organization**.
 
-If the node’s label matches the data point’s class, we move the node closer to the input. We reinforce the correct representation.
+A system in which structure is not imposed explicitly, but emerges naturally from local interactions — from simple rules applied repeatedly.
 
-If the labels do not match, we do the opposite. We push the node away from the input.
+A grid that begins as a blank slate becomes a meaningful map.
 
-In other words, the node is rewarded for being correct, and penalized for being wrong.
+A collection of independent vectors becomes an organized representation.
 
----
-
-Over time, this has a very specific effect.
-
-Nodes representing different classes begin to separate more clearly. The boundaries between regions become sharper. The map, which was originally organized for similarity, is now refined for classification.
-
-Unlike the original SOM learning, this process does not involve neighbors. Only the best matching unit is updated. The goal is no longer to preserve smooth topology, but to improve decision accuracy.
-
-What emerges is a hybrid structure:
-
-A map that still reflects the geometry of the data, but now also encodes class boundaries.
+And high-dimensional complexity becomes something we can finally see.
 
 ---
 
-And so the full picture comes together.
+In the end, the self-organizing map is not just an algorithm.
 
-We begin with high-dimensional data that cannot be visualized.
+It is a way of thinking.
 
-We introduce a simple grid — a structure that imposes order.
-
-We allow that structure to adapt itself to the data, using local interactions and neighborhood-based learning.
-
-From this, a map emerges — one that reveals similarity, clusters, and relationships.
-
-And finally, if labels are available, we refine this map further, shaping it into a tool for classification.
-
----
-
-In the end, the self-organizing map and learning vector quantization are not separate ideas, but parts of a continuum.
-
-First, we learn the structure of the data.
-
-Then, we learn how to make decisions within that structure.
-
-From organization to understanding.
-
-From understanding to classification.
-
----
-
-And that is the essence of Kohonen’s work.
-
-A system that begins with no knowledge at all, and through simple, local rules, builds a meaningful representation of the world — one that we can see, interpret, and use.
+A way of taking complexity, and arranging it into form.
