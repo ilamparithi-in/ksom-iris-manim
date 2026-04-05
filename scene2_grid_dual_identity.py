@@ -33,7 +33,7 @@ GRID_CX      = -4.2       # world-space x-centre of the grid
 
 # ── Data space geometry ─────────────────────────────────────────────────────────
 DATA_CX   = 3.2           # world-space x-centre of axes / point cloud
-DATA_HALF = 1.3           # half-range for axis labels and blob scaling
+DATA_HALF = 3.5           # half-range for axis labels and blob scaling
 
 
 def grid_pos(r: int, c: int) -> np.ndarray:
@@ -154,9 +154,9 @@ class Scene2GridDualIdentity(ThreeDScene):
             x_range=[-DATA_HALF, DATA_HALF, 1],
             y_range=[-DATA_HALF, DATA_HALF, 1],
             z_range=[-DATA_HALF, DATA_HALF, 1],
-            x_length=3.0,
-            y_length=3.0,
-            z_length=3.0,
+            x_length=8.0,
+            y_length=8.0,
+            z_length=8.0,
         ).shift(RIGHT * DATA_CX)
 
         data_dots = VGroup(*[
