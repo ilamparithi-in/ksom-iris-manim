@@ -60,7 +60,7 @@ def render_job(args: tuple) -> tuple:
     LOGS_DIR.mkdir(exist_ok=True)
     log_path = LOGS_DIR / f"{py_file.stem}__{scene}.log"
     cmd      = ["taskset", "-c", str(core), "manim", quality_flag,
-                "--renderer=opengl", "--disable_caching",
+                "--renderer=opengl", "--write_to_movie", "--disable_caching",
                 "--media_dir", str(MEDIA_DIR.parent), py_file_str, scene]
     t0       = time.monotonic()
 
