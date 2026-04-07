@@ -25,6 +25,9 @@ from sklearn.datasets import make_blobs
 from sklearn.preprocessing import MinMaxScaler
 from manim import *
 
+DEFAULT_FONT = "CMU Serif"
+Text.set_default(font=DEFAULT_FONT)
+
 # ====================================================================
 # DATA  (identical seed / params to scenes 6-8)
 # ====================================================================

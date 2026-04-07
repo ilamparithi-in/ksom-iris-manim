@@ -26,6 +26,9 @@ from sklearn.datasets import make_blobs
 from sklearn.preprocessing import MinMaxScaler
 from manim import *
 
+DEFAULT_FONT = "CMU Serif"
+Text.set_default(font=DEFAULT_FONT)
+
 # ===========================================================================
 # STEP 1 -- DATA GENERATION
 # ===========================================================================

@@ -17,6 +17,9 @@ from sklearn.datasets import make_blobs
 from sklearn.preprocessing import MinMaxScaler
 from manim import *
 
+DEFAULT_FONT = "CMU Serif"
+Text.set_default(font=DEFAULT_FONT)
+
 # ── Colour palette ──────────────────────────────────────────────────────────────
 GRID_NODE_COLOR = BLUE_D
 GRID_EDGE_COLOR = BLUE_E

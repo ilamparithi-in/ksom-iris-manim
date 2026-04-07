@@ -25,6 +25,9 @@ Usage:
 import numpy as np
 from manim import *
 
+DEFAULT_FONT = "CMU Serif"
+Text.set_default(font=DEFAULT_FONT)
+
 # ---------------------------------------------------------------------------
 # Colours
 # ---------------------------------------------------------------------------
