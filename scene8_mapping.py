@@ -134,7 +134,8 @@ class Scene8Mapping(ThreeDScene):
     """Mapping new data to a trained SOM grid."""
 
     def construct(self):
-        self.set_camera_orientation(phi=55 * DEGREES, theta=-60 * DEGREES, zoom=0.9)
+        self.set_camera_orientation(phi=55 * DEGREES, theta=-60 * DEGREES)
+        self.camera.frame.scale(1 / 0.9)
 
         # ----------------------------------------------------------------
         # PART 1 — SCENE-7 END STATE

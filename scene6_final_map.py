@@ -125,9 +125,8 @@ class Scene6FinalMap(ThreeDScene):
     """Final map: 4x4 grid embedded in data space using real trained weights."""
 
     def construct(self):
-        self.set_camera_orientation(
-            phi=55 * DEGREES, theta=-60 * DEGREES, zoom=0.9
-        )
+        self.set_camera_orientation(phi=55 * DEGREES, theta=-60 * DEGREES)
+        self.camera.frame.scale(1 / 0.9)
 
         # ====================================================================
         # PART 1 -- SHOW DATA CLOUD

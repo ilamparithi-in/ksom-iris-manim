@@ -84,8 +84,8 @@ class Scene3BMU(ThreeDScene):
         # PART 1 — ZOOMED SETUP
         # ══════════════════════════════════════════════════════════════════════
 
-        self.set_camera_orientation(phi=0 * DEGREES, theta=-90 * DEGREES,
-                                    zoom=0.85)
+        self.set_camera_orientation(phi=0 * DEGREES, theta=-90 * DEGREES)
+        self.camera.scale(1 / 0.85)
 
         # ── 4×4 Grid (LEFT) ───────────────────────────────────────────────────
         grid_nodes = VGroup(*[
@@ -140,8 +140,8 @@ class Scene3BMU(ThreeDScene):
         self.play(*non_cand_anims, run_time=0.8)
 
         # Light camera tilt for slight 3-D feel
-        self.move_camera(phi=15 * DEGREES, theta=-75 * DEGREES, zoom=1.1,
-                         run_time=1.5)
+        self.move_camera(phi=15 * DEGREES, theta=-75 * DEGREES, zoom=1.1, run_time=1.5,
+                         added_anims=[])
         self.wait(0.4)
 
         # ══════════════════════════════════════════════════════════════════════
@@ -316,8 +316,8 @@ class Scene3BMU(ThreeDScene):
         self.remove(lbl_formula)
 
         # Level camera back to flat
-        self.move_camera(phi=0 * DEGREES, theta=-90 * DEGREES, zoom=1.0,
-                         run_time=1.0)
+        self.move_camera(phi=0 * DEGREES, theta=-90 * DEGREES, zoom=1.0, run_time=1.0,
+                         added_anims=[])
 
         # CENTRE TEXT — strict pattern
         lbl_bmu = Text("Best Matching Unit", font_size=40, color=WHITE)

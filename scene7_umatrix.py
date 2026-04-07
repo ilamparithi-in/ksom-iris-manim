@@ -186,7 +186,8 @@ class Scene7UMatrix(ThreeDScene):
     """Clusters and Boundaries via the U-Matrix."""
 
     def construct(self):
-        self.set_camera_orientation(phi=55 * DEGREES, theta=-60 * DEGREES, zoom=0.9)
+        self.set_camera_orientation(phi=55 * DEGREES, theta=-60 * DEGREES)
+        self.camera.scale(1 / 0.9)
 
         # ----------------------------------------------------------------
         # PART 1 — SETUP  (scene-6 end state: trained grid + data cloud)

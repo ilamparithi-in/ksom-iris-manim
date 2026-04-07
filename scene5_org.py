@@ -101,8 +101,7 @@ class Scene5Organization(ThreeDScene):
     """Global → Local organisation over 3 simulated training phases."""
 
     def construct(self):
-        self.set_camera_orientation(phi=15 * DEGREES, theta=-75 * DEGREES,
-                                    zoom=1.0)
+        self.set_camera_orientation(phi=15 * DEGREES, theta=-75 * DEGREES)
 
         # Working copy of weight positions (modified in-place each phase)
         cur_pos = INIT_WEIGHTS.copy()

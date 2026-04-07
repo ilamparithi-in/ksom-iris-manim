@@ -53,7 +53,8 @@ class Scene1HighDimData(ThreeDScene):
         # PART 1 — SIMPLE 1D
         # Flat overhead camera — clean, calm, symmetric.
         # ═══════════════════════════════════════════════════════════════
-        self.set_camera_orientation(phi=0, theta=-90 * DEGREES, zoom=1.2)
+        self.set_camera_orientation(phi=0, theta=-90 * DEGREES)
+        self.camera.scale(1 / 1.2)
 
         nline = NumberLine(
             x_range=[-3, 3, 1],

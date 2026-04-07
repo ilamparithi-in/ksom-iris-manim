@@ -70,7 +70,8 @@ class Scene2GridDualIdentity(ThreeDScene):
         # SETUP — camera, pre-compute geometry, generate blobs
         # ══════════════════════════════════════════════════════════════════════
 
-        self.set_camera_orientation(phi=70 * DEGREES, theta=-50 * DEGREES, zoom=0.75)
+        self.set_camera_orientation(phi=70 * DEGREES, theta=-50 * DEGREES)
+        self.camera.scale(1 / 0.75)
 
         all_grid_pos = [
             grid_pos(r, c) for r in range(GRID_ROWS) for c in range(GRID_COLS)

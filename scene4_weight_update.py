@@ -106,8 +106,7 @@ class Scene4WeightUpdate(ThreeDScene):
         # PART 1 -- CONTEXT  (Scene 3 end state: BMU already selected)
         # ====================================================================
 
-        self.set_camera_orientation(phi=15 * DEGREES, theta=-75 * DEGREES,
-                                    zoom=1.0)
+        self.set_camera_orientation(phi=15 * DEGREES, theta=-75 * DEGREES)
 
         # -- 4x4 grid (LEFT) -------------------------------------------------
         grid_nodes = VGroup(*[
