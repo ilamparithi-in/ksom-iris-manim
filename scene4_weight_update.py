@@ -106,8 +106,7 @@ class Scene4WeightUpdate(ThreeDScene):
         # PART 1 -- CONTEXT  (Scene 3 end state: BMU already selected)
         # ====================================================================
 
-        self.set_camera_orientation(phi=15 * DEGREES, theta=-75 * DEGREES,
-                                    zoom=1.0)
+        self.set_camera_orientation(phi=15 * DEGREES, theta=-75 * DEGREES)
 
         # -- 4x4 grid (LEFT) -------------------------------------------------
         grid_nodes = VGroup(*[
@@ -203,6 +202,7 @@ class Scene4WeightUpdate(ThreeDScene):
         # Save positions before any movement (used for ghost in Part 9)
         pre_step_pos = cur_pos.copy()
 
+        self.stop_ambient_camera_rotation()
         bmu_new_pos = cur_pos[BMU_IDX] + ALPHA * (INPUT_POS - cur_pos[BMU_IDX])
 
         # Dashed pull-line shows direction
@@ -219,6 +219,7 @@ class Scene4WeightUpdate(ThreeDScene):
         )
         cur_pos[BMU_IDX] = bmu_new_pos
         self.wait(1.0)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ====================================================================
         # PART 4 -- INTRODUCE NEIGHBOURHOOD (h-value color gradient on grid)
@@ -273,6 +274,7 @@ class Scene4WeightUpdate(ThreeDScene):
         self.remove(lbl_h_short)
         self.wait(1.5)
 
+        self.stop_ambient_camera_rotation()
         # Radial glow rings centred on BMU grid node (world space)
         bmu_world = np.array(GRID_POSITIONS[bmu_g_idx])
         ring_radii = [0.28, 0.56, 0.88, 1.22]
@@ -294,6 +296,7 @@ class Scene4WeightUpdate(ThreeDScene):
         # PART 6 -- NEIGHBOUR UPDATES (staggered; closer nodes move more)
         # ====================================================================
 
+        self.stop_ambient_camera_rotation()
         move_anims = []
         for i in range(len(cur_pos)):
             if i == BMU_IDX:
@@ -309,6 +312,7 @@ class Scene4WeightUpdate(ThreeDScene):
             run_time=2.5,
         )
         self.wait(1.0)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ====================================================================
         # PART 7 -- DISTANT NODE: barely moved
@@ -339,6 +343,7 @@ class Scene4WeightUpdate(ThreeDScene):
         # PART 9 -- SINGLE STEP SUMMARY (ghost dots + "One training step")
         # ====================================================================
 
+        self.stop_ambient_camera_rotation()
         ghost_dots = VGroup(*[
             Dot3D(
                 point=pre_step_pos[i], radius=0.09,
@@ -362,6 +367,7 @@ class Scene4WeightUpdate(ThreeDScene):
 
         self.play(FadeOut(lbl_step), FadeOut(ghost_dots), run_time=0.8)
         self.remove(lbl_step)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ====================================================================
         # PART 10 -- PREP FOR LOOP
@@ -375,4 +381,5 @@ class Scene4WeightUpdate(ThreeDScene):
             run_time=0.8,
         )
         self.remove(lbl_winner_moves, lbl_neighbors, lbl_h_full)
+        self.stop_ambient_camera_rotation()
         self.wait(1.5)

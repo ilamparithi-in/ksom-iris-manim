@@ -101,8 +101,7 @@ class Scene5Organization(ThreeDScene):
     """Global → Local organisation over 3 simulated training phases."""
 
     def construct(self):
-        self.set_camera_orientation(phi=15 * DEGREES, theta=-75 * DEGREES,
-                                    zoom=1.0)
+        self.set_camera_orientation(phi=55 * DEGREES, theta=-60 * DEGREES)
 
         # Working copy of weight positions (modified in-place each phase)
         cur_pos = INIT_WEIGHTS.copy()
@@ -148,12 +147,8 @@ class Scene5Organization(ThreeDScene):
                          "include_ticks": False},
         ).shift(RIGHT * 2.2)
 
-        self.play(Create(h_lines), Create(v_lines), FadeIn(data_axes), run_time=1.0)
-        self.play(
-            LaggedStart(*[FadeIn(d) for d in grid_nodes], lag_ratio=0.04),
-            LaggedStart(*[FadeIn(d) for d in w_dots],    lag_ratio=0.10),
-            run_time=1.2,
-        )
+        self.add(h_lines, v_lines, data_axes, grid_nodes, w_dots)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
         self.wait(0.5)
 
         # STRICT TEXT PATTERN ▼
@@ -192,6 +187,7 @@ class Scene5Organization(ThreeDScene):
         self.wait(0.4)
 
         # Move ALL 6 weight nodes — large displacements
+        self.stop_ambient_camera_rotation()
         move_early = []
         for i in range(len(cur_pos)):
             h = h_func(BMU_G, WEIGHT_GRID_IDX[i], sigma0)
@@ -207,6 +203,7 @@ class Scene5Organization(ThreeDScene):
             run_time=0.6,
         )
         self.remove(lbl_large_nbr)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ====================================================================
         # PART 3 — α(t) AND σ(t) DECAY EQUATIONS (fixed, top-centre)
@@ -250,6 +247,7 @@ class Scene5Organization(ThreeDScene):
         # PART 4 — SHRINKING NEIGHBOURHOOD VISUAL (glow rings on grid)
         # ====================================================================
 
+        self.stop_ambient_camera_rotation()
         bmu_world = np.array(GRID_POSITIONS[BMU_G])
 
         # Phase 1 rings — large sigma (covers most of grid)
@@ -293,6 +291,7 @@ class Scene5Organization(ThreeDScene):
         )
         self.wait(0.4)
         self.play(FadeOut(rings_small), run_time=0.4)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ====================================================================
         # PART 5 — MID PHASE: REFINING STRUCTURE
@@ -323,6 +322,7 @@ class Scene5Organization(ThreeDScene):
         self.wait(0.3)
 
         # Move nodes with h > 0.10 (drops far nodes)
+        self.stop_ambient_camera_rotation()
         move_mid = []
         for i in range(len(cur_pos)):
             h = h_func(BMU_G, WEIGHT_GRID_IDX[i], sigma1)
@@ -340,6 +340,7 @@ class Scene5Organization(ThreeDScene):
             run_time=0.6,
         )
         self.remove(lbl_refine)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ====================================================================
         # PART 6 — LATE PHASE: FINE TUNING
@@ -370,6 +371,7 @@ class Scene5Organization(ThreeDScene):
         self.wait(0.3)
 
         # Move only BMU + nearest (h > 0.10); tiny displacements
+        self.stop_ambient_camera_rotation()
         move_late = []
         for i in range(len(cur_pos)):
             h = h_func(BMU_G, WEIGHT_GRID_IDX[i], sigma2)
@@ -387,11 +389,13 @@ class Scene5Organization(ThreeDScene):
             run_time=0.6,
         )
         self.remove(lbl_fine)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ====================================================================
         # PART 7 — STABILISATION / CONVERGENCE
         # ====================================================================
 
+        self.stop_ambient_camera_rotation()
         # Reset grid to uniform neutral colour
         grid_reset = [
             grid_nodes[j].animate.set_opacity(0.85).set_color(GRID_COLOR)
@@ -408,11 +412,13 @@ class Scene5Organization(ThreeDScene):
         self.wait(2.5)
         self.play(FadeOut(lbl_converge), run_time=0.7)
         self.remove(lbl_converge)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ====================================================================
         # PART 8 — BEFORE vs AFTER (ghost initial positions)
         # ====================================================================
 
+        self.stop_ambient_camera_rotation()
         # Ghost dots at original weight positions (world space)
         ghost_dots = VGroup(*[
             Dot3D(point=init_pos[i], radius=0.10, color=GREY_B)
@@ -438,6 +444,7 @@ class Scene5Organization(ThreeDScene):
             FadeOut(ghost_dots), FadeOut(ghost_anno), FadeOut(after_anno),
             run_time=0.8,
         )
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ====================================================================
         # PART 9 — SUMMARY
@@ -455,4 +462,6 @@ class Scene5Organization(ThreeDScene):
         self.wait(3.5)
         self.play(FadeOut(lbl_summary), run_time=0.8)
         self.remove(lbl_summary)
+        self.stop_ambient_camera_rotation()
+        self.move_camera(phi=55 * DEGREES, theta=-60 * DEGREES, run_time=0.8)
         self.wait(0.8)

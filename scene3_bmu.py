@@ -84,8 +84,7 @@ class Scene3BMU(ThreeDScene):
         # PART 1 — ZOOMED SETUP
         # ══════════════════════════════════════════════════════════════════════
 
-        self.set_camera_orientation(phi=0 * DEGREES, theta=-90 * DEGREES,
-                                    zoom=0.85)
+        self.set_camera_orientation(phi=0 * DEGREES, theta=-90 * DEGREES)
 
         # ── 4×4 Grid (LEFT) ───────────────────────────────────────────────────
         grid_nodes = VGroup(*[
@@ -143,11 +142,14 @@ class Scene3BMU(ThreeDScene):
         self.move_camera(phi=15 * DEGREES, theta=-75 * DEGREES, zoom=1.1,
                          run_time=1.5)
         self.wait(0.4)
+        self.move_camera(phi=55 * DEGREES, theta=-60 * DEGREES, run_time=1.2)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ══════════════════════════════════════════════════════════════════════
         # PART 2 — INPUT POINT + WORLD-SPACE "x" LABEL
         # ══════════════════════════════════════════════════════════════════════
 
+        self.stop_ambient_camera_rotation()
         inp_dot = Dot3D(point=INPUT_POS, radius=0.14, color=INPUT_COLOR)
         self.play(FadeIn(inp_dot), run_time=0.8)
 
@@ -155,11 +157,14 @@ class Scene3BMU(ThreeDScene):
         inp_lbl.move_to(INPUT_POS + np.array([0.0, 0.40, 0.0]))
         self.play(FadeIn(inp_lbl), run_time=0.5)
         self.wait(0.8)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ══════════════════════════════════════════════════════════════════════
         # PART 3 — DISTANCE LINES + SMALL WORLD-SPACE "d" LABELS
         # ══════════════════════════════════════════════════════════════════════
 
+        self.stop_ambient_camera_rotation()
+        self.move_camera(phi=55 * DEGREES, theta=-60 * DEGREES, run_time=0.5)
         dists = [np.linalg.norm(INPUT_POS - CAND_POSITIONS[i])
                  for i in range(len(CAND_POSITIONS))]
         d_min, d_max = min(dists), max(dists)
@@ -190,10 +195,10 @@ class Scene3BMU(ThreeDScene):
             run_time=0.8,
         )
         self.wait(0.6)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ══════════════════════════════════════════════════════════════════════
         # PART 4 — FIXED SCREEN TEXT
-        # Strict pattern: create → to_edge → add_fixed_in_frame → FadeIn
         # ══════════════════════════════════════════════════════════════════════
 
         # TOP LEFT
@@ -215,6 +220,7 @@ class Scene3BMU(ThreeDScene):
         self.play(FadeIn(lbl_formula), run_time=0.6)
 
         self.wait(2.0)
+        self.stop_ambient_camera_rotation()
 
         # ══════════════════════════════════════════════════════════════════════
         # PART 5 — FIND WINNER
@@ -246,13 +252,13 @@ class Scene3BMU(ThreeDScene):
         winner_lbl.move_to(CAND_POSITIONS[win_idx] + np.array([0.0, 0.44, 0.0]))
         self.play(FadeIn(winner_lbl), run_time=0.5)
         self.wait(1.2)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ══════════════════════════════════════════════════════════════════════
         # PART 6 — GRID LINK
-        # Highlight the corresponding grid node (LEFT) and draw a brief
-        # connection line to the winning weight node (RIGHT).
         # ══════════════════════════════════════════════════════════════════════
 
+        self.stop_ambient_camera_rotation()
         g_idx = CAND_GRID_IDX[win_idx]
         g_dot = grid_nodes[g_idx]
 
@@ -274,6 +280,7 @@ class Scene3BMU(ThreeDScene):
         )
         self.play(FadeIn(same_node_lbl), run_time=0.5)
         self.wait(1.5)
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ══════════════════════════════════════════════════════════════════════
         # PART 7 — EQUATION (FIXED, TOP CENTRE)
@@ -290,6 +297,7 @@ class Scene3BMU(ThreeDScene):
         self.add_fixed_in_frame_mobjects(lbl_eq)
         self.play(FadeIn(lbl_eq), run_time=0.8)
         self.wait(2.5)
+        self.stop_ambient_camera_rotation()
 
         # ══════════════════════════════════════════════════════════════════════
         # PART 8 — END STATE
@@ -314,10 +322,6 @@ class Scene3BMU(ThreeDScene):
             run_time=1.2,
         )
         self.remove(lbl_formula)
-
-        # Level camera back to flat
-        self.move_camera(phi=0 * DEGREES, theta=-90 * DEGREES, zoom=1.0,
-                         run_time=1.0)
 
         # CENTRE TEXT — strict pattern
         lbl_bmu = Text("Best Matching Unit", font_size=40, color=WHITE)
