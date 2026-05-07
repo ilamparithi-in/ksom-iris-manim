@@ -201,7 +201,7 @@ class Scene9SelfOrg(ThreeDScene):
         lbl_after = Text("After training", font_size=30, color=GREY_A)
         lbl_after.to_edge(UL)
         self.add_fixed_in_frame_mobjects(lbl_after)
-        self.play(FadeIn(lbl_after), run_time=1.0)
+        self.play(Write(lbl_after), run_time=1.0)
         self.wait(2.5)   # let it breathe
 
         # ----------------------------------------------------------------
@@ -223,7 +223,7 @@ class Scene9SelfOrg(ThreeDScene):
         # Show ghosts + text together (trained weights already hidden)
         self.play(
             FadeIn(ghost_dots, run_time=1.5),
-            FadeIn(lbl_disorder, run_time=1.5),
+            Write(lbl_disorder, run_time=1.5),
         )
         self.wait(2.0)
 
@@ -242,7 +242,7 @@ class Scene9SelfOrg(ThreeDScene):
         self.add_fixed_in_frame_mobjects(lbl_structure)
         # Reveal trained weights as ghosts disappear — the "snap into place" moment
         self.play(
-            FadeIn(lbl_structure, run_time=1.0),
+            Write(lbl_structure, run_time=1.0),
             FadeOut(ghost_dots, run_time=1.0),
             FadeIn(w_dots, run_time=1.0),
         )
@@ -279,7 +279,7 @@ class Scene9SelfOrg(ThreeDScene):
         lbl_geom = Text("Complexity becomes geometry", font_size=30, color=GREY_A)
         lbl_geom.to_edge(DOWN)
         self.add_fixed_in_frame_mobjects(lbl_geom)
-        self.play(FadeIn(lbl_geom), run_time=1.0)
+        self.play(Write(lbl_geom), run_time=1.0)
         self.wait(2.5)
 
         # Restore patch nodes
@@ -303,13 +303,8 @@ class Scene9SelfOrg(ThreeDScene):
         lbl_selforg.move_to(ORIGIN)
         self.add_fixed_in_frame_mobjects(lbl_selforg)
 
-        # Fade in + slight scale-up
-        lbl_selforg.scale(0.6)
-        self.play(
-            FadeIn(lbl_selforg),
-            lbl_selforg.animate.scale(1 / 0.6),
-            run_time=2.0,
-        )
+        # Write animation is iconic enough without the scale trick
+        self.play(Write(lbl_selforg), run_time=2.0)
         self.wait(3.5)   # let it sit
 
         # ----------------------------------------------------------------
@@ -322,7 +317,7 @@ class Scene9SelfOrg(ThreeDScene):
         )
         lbl_local.to_edge(UP)
         self.add_fixed_in_frame_mobjects(lbl_local)
-        self.play(FadeIn(lbl_local), run_time=1.2)
+        self.play(Write(lbl_local), run_time=1.2)
         self.wait(2.5)
 
         # Fade out the centre title, keep subtle top label
@@ -339,7 +334,7 @@ class Scene9SelfOrg(ThreeDScene):
         )
         lbl_dist.to_edge(DOWN)
         self.add_fixed_in_frame_mobjects(lbl_dist)
-        self.play(FadeIn(lbl_dist), run_time=1.0)
+        self.play(Write(lbl_dist), run_time=1.0)
 
         # Full 360° rotation: 2π / rate ≈ one complete revolution
         self.begin_ambient_camera_rotation(rate=0.5, about="theta")
@@ -359,7 +354,7 @@ class Scene9SelfOrg(ThreeDScene):
         )
         lbl_closing.move_to(ORIGIN)
         self.add_fixed_in_frame_mobjects(lbl_closing)
-        self.play(FadeIn(lbl_closing, run_time=1.8))
+        self.play(Write(lbl_closing, run_time=1.8))
         self.wait(4.0)    # longer pause — this is the final thought
 
         # ----------------------------------------------------------------

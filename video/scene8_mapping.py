@@ -194,7 +194,7 @@ class Scene8Mapping(ThreeDScene):
             LaggedStart(*[FadeIn(d) for d in w_dots],    lag_ratio=0.04),
             LaggedStart(*[FadeIn(d) for d in data_dots], lag_ratio=0.005),
             FadeIn(data_axes),
-            FadeIn(lbl_using),
+            Write(lbl_using),
             run_time=2.5,
         )
         self.wait(1.0)
@@ -213,8 +213,8 @@ class Scene8Mapping(ThreeDScene):
 
         self.play(
             FadeIn(new_dot),
-            FadeIn(new_dot_lbl),
-            FadeIn(lbl_new_obs),
+            Write(new_dot_lbl),
+            Write(lbl_new_obs),
             run_time=1.0,
         )
         # Pulse
@@ -247,7 +247,7 @@ class Scene8Mapping(ThreeDScene):
 
         self.play(
             FadeOut(lbl_new_obs),
-            FadeIn(lbl_find),
+            Write(lbl_find),
             LaggedStart(*[Create(ln) for ln in cand_lines], lag_ratio=0.15),
             run_time=1.2,
         )
@@ -280,7 +280,7 @@ class Scene8Mapping(ThreeDScene):
 
         self.play(
             FadeOut(lbl_find),
-            FadeIn(lbl_mapped),
+            Write(lbl_mapped),
             FadeOut(cand_lines),
             Create(map_line),
             run_time=1.0,
@@ -372,7 +372,7 @@ class Scene8Mapping(ThreeDScene):
                       font_size=26, color=WHITE)
         lbl_hd.to_edge(DOWN, buff=0.3)
         self.add_fixed_in_frame_mobjects(lbl_hd)
-        self.play(FadeIn(lbl_hd), run_time=0.8)
+        self.play(Write(lbl_hd), run_time=0.8)
         self.wait(2.5)
 
         # Slow ambient spin to admire the result
@@ -393,7 +393,7 @@ class Scene8Mapping(ThreeDScene):
                          font_size=30, color=TEAL_B)
         lbl_final.to_edge(DOWN, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_final)
-        self.play(FadeIn(lbl_final), run_time=0.8)
+        self.play(Write(lbl_final), run_time=0.8)
         self.wait(2.0)
         self.play(FadeOut(lbl_final), run_time=0.8)
         self.wait(0.5)

@@ -157,7 +157,7 @@ class Scene6FinalMap(ThreeDScene):
         self.add_fixed_in_frame_mobjects(lbl_data)
         self.play(
             LaggedStart(*[FadeIn(d) for d in data_dots], lag_ratio=0.006),
-            FadeIn(lbl_data),
+            Write(lbl_data),
             FadeIn(data_axes),
             run_time=2.5,
         )
@@ -200,7 +200,7 @@ class Scene6FinalMap(ThreeDScene):
         self.add_fixed_in_frame_mobjects(lbl_grid)
         self.play(
             Create(h_lines), Create(v_lines),
-            FadeIn(lbl_grid),
+            Write(lbl_grid),
             run_time=1.2,
         )
         self.play(
@@ -225,7 +225,7 @@ class Scene6FinalMap(ThreeDScene):
         self.play(FadeOut(lbl_data), run_time=0.5)
         self.play(
             LaggedStart(*[FadeIn(d) for d in w_dots], lag_ratio=0.04),
-            FadeIn(lbl_weights),
+            Write(lbl_weights),
             run_time=2.0,
         )
         self.wait(1.5)
@@ -252,7 +252,7 @@ class Scene6FinalMap(ThreeDScene):
         self.add_fixed_in_frame_mobjects(lbl_mapping)
         self.play(
             LaggedStart(*[Create(l) for l in conn_lines], lag_ratio=0.05),
-            FadeIn(lbl_mapping),
+            Write(lbl_mapping),
             run_time=2.5,
         )
         self.wait(1.5)
@@ -265,7 +265,7 @@ class Scene6FinalMap(ThreeDScene):
         lbl_learned = Text("Learned representation", font_size=32, color=WHITE)
         lbl_learned.to_edge(UP, buff=0.3)
         self.add_fixed_in_frame_mobjects(lbl_learned)
-        self.play(FadeIn(lbl_learned), run_time=0.8)
+        self.play(Write(lbl_learned), run_time=0.8)
         self.wait(2.0)
 
         # ====================================================================
@@ -287,7 +287,7 @@ class Scene6FinalMap(ThreeDScene):
             grid_nodes[adj_b].animate.set_color(YELLOW).scale(1.6),
             w_dots[adj_a].animate.set_color(YELLOW).scale(1.5),
             w_dots[adj_b].animate.set_color(YELLOW).scale(1.5),
-            FadeIn(lbl_nearby),
+            Write(lbl_nearby),
             run_time=1.0,
         )
         adj_conn = Line(w_pos(adj_a), w_pos(adj_b), color=YELLOW, stroke_width=2.0)
@@ -318,7 +318,7 @@ class Scene6FinalMap(ThreeDScene):
             grid_nodes[dist_b].animate.set_color(ORANGE).scale(1.6),
             w_dots[dist_a].animate.set_color(ORANGE).scale(1.5),
             w_dots[dist_b].animate.set_color(ORANGE).scale(1.5),
-            FadeIn(lbl_distant),
+            Write(lbl_distant),
             run_time=1.0,
         )
         dist_conn = Line(w_pos(dist_a), w_pos(dist_b), color=ORANGE, stroke_width=2.0)
@@ -345,7 +345,7 @@ class Scene6FinalMap(ThreeDScene):
                         font_size=26, color=WHITE)
         lbl_dist.to_edge(DOWN, buff=0.4)
         self.add_fixed_in_frame_mobjects(lbl_dist)
-        self.play(FadeIn(lbl_dist), run_time=0.8)
+        self.play(Write(lbl_dist), run_time=0.8)
         self.wait(4.0)
 
         self.stop_ambient_camera_rotation()
@@ -355,7 +355,7 @@ class Scene6FinalMap(ThreeDScene):
         lbl_final = Text("Structure revealed", font_size=40, color=TEAL_B)
         lbl_final.move_to(ORIGIN)
         self.add_fixed_in_frame_mobjects(lbl_final)
-        self.play(FadeIn(lbl_final), run_time=1.0)
+        self.play(Write(lbl_final), run_time=1.0)
         self.wait(3.0)
         self.play(FadeOut(lbl_final), run_time=0.8)
         self.wait(0.5)

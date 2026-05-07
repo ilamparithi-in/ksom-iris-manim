@@ -155,7 +155,7 @@ class Scene5Organization(ThreeDScene):
         lbl_training = Text("Training over time", font_size=30, color=WHITE)
         lbl_training.to_edge(UL, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_training)
-        self.play(FadeIn(lbl_training), run_time=0.8)
+        self.play(Write(lbl_training), run_time=0.8)
         self.wait(1.0)
 
         # ====================================================================
@@ -166,7 +166,7 @@ class Scene5Organization(ThreeDScene):
         inp0 = Dot3D(point=inp0_pt, radius=0.14, color=INPUT_COLOR)
         inp0_lbl = Text("x", font_size=24, color=INPUT_COLOR)
         inp0_lbl.move_to(inp0_pt + np.array([0.0, 0.44, 0.0]))
-        self.play(FadeIn(inp0), FadeIn(inp0_lbl), run_time=0.7)
+        self.play(FadeIn(inp0), Write(inp0_lbl), run_time=0.7)
 
         # Colorise ALL grid nodes by h value (sigma=2.0 → almost whole grid)
         grid_anims_early = []
@@ -183,7 +183,7 @@ class Scene5Organization(ThreeDScene):
         lbl_large_nbr = Text("Large neighborhood", font_size=28, color=GREEN_B)
         lbl_large_nbr.to_edge(UR, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_large_nbr)
-        self.play(FadeIn(lbl_large_nbr), run_time=0.6)
+        self.play(Write(lbl_large_nbr), run_time=0.6)
         self.wait(0.4)
 
         # Move ALL 6 weight nodes — large displacements
@@ -213,14 +213,14 @@ class Scene5Organization(ThreeDScene):
         lbl_alpha = MathTex(r"\alpha(t)", font_size=46, color=WHITE)
         lbl_alpha.to_edge(UP, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_alpha)
-        self.play(FadeIn(lbl_alpha), run_time=0.6)
+        self.play(Write(lbl_alpha), run_time=0.6)
         self.wait(0.8)
 
         # STRICT TEXT PATTERN ▼  — α(t) ↓
         lbl_alpha_down = MathTex(r"\alpha(t) \downarrow", font_size=46, color=YELLOW)
         lbl_alpha_down.to_edge(UP, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_alpha_down)
-        self.play(FadeOut(lbl_alpha), FadeIn(lbl_alpha_down), run_time=0.8)
+        self.play(FadeOut(lbl_alpha), Write(lbl_alpha_down), run_time=0.8)
         self.remove(lbl_alpha)
         self.wait(0.8)
 
@@ -228,7 +228,7 @@ class Scene5Organization(ThreeDScene):
         lbl_sigma = MathTex(r"\sigma(t)", font_size=46, color=WHITE)
         lbl_sigma.to_edge(UP, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_sigma)
-        self.play(FadeOut(lbl_alpha_down), FadeIn(lbl_sigma), run_time=0.8)
+        self.play(FadeOut(lbl_alpha_down), Write(lbl_sigma), run_time=0.8)
         self.remove(lbl_alpha_down)
         self.wait(0.8)
 
@@ -236,7 +236,7 @@ class Scene5Organization(ThreeDScene):
         lbl_sigma_down = MathTex(r"\sigma(t) \downarrow", font_size=46, color=YELLOW)
         lbl_sigma_down.to_edge(UP, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_sigma_down)
-        self.play(FadeOut(lbl_sigma), FadeIn(lbl_sigma_down), run_time=0.8)
+        self.play(FadeOut(lbl_sigma), Write(lbl_sigma_down), run_time=0.8)
         self.remove(lbl_sigma)
         self.wait(1.0)
 
@@ -301,7 +301,7 @@ class Scene5Organization(ThreeDScene):
         inp1 = Dot3D(point=inp1_pt, radius=0.14, color=INPUT_COLOR)
         inp1_lbl = Text("x", font_size=24, color=INPUT_COLOR)
         inp1_lbl.move_to(inp1_pt + np.array([0.0, 0.44, 0.0]))
-        self.play(FadeIn(inp1), FadeIn(inp1_lbl), run_time=0.6)
+        self.play(FadeIn(inp1), Write(inp1_lbl), run_time=0.6)
 
         # Recolour grid: sigma=1.0 → only 3×3 centre glows meaningfully
         grid_anims_mid = []
@@ -318,7 +318,7 @@ class Scene5Organization(ThreeDScene):
         lbl_refine = Text("Refining structure", font_size=28, color=TEAL_B)
         lbl_refine.to_edge(UR, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_refine)
-        self.play(FadeIn(lbl_refine), run_time=0.6)
+        self.play(Write(lbl_refine), run_time=0.6)
         self.wait(0.3)
 
         # Move nodes with h > 0.10 (drops far nodes)
@@ -350,7 +350,7 @@ class Scene5Organization(ThreeDScene):
         inp2 = Dot3D(point=inp2_pt, radius=0.14, color=INPUT_COLOR)
         inp2_lbl = Text("x", font_size=24, color=INPUT_COLOR)
         inp2_lbl.move_to(inp2_pt + np.array([0.0, 0.44, 0.0]))
-        self.play(FadeIn(inp2), FadeIn(inp2_lbl), run_time=0.6)
+        self.play(FadeIn(inp2), Write(inp2_lbl), run_time=0.6)
 
         # Recolour: sigma=0.5 → barely 2×2 centre survives threshold
         grid_anims_late = []
@@ -367,7 +367,7 @@ class Scene5Organization(ThreeDScene):
         lbl_fine = Text("Fine tuning", font_size=28, color=BLUE_B)
         lbl_fine.to_edge(UR, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_fine)
-        self.play(FadeIn(lbl_fine), run_time=0.6)
+        self.play(Write(lbl_fine), run_time=0.6)
         self.wait(0.3)
 
         # Move only BMU + nearest (h > 0.10); tiny displacements
@@ -408,7 +408,7 @@ class Scene5Organization(ThreeDScene):
         lbl_converge = Text("Convergence", font_size=42, color=GREEN_B)
         lbl_converge.move_to(ORIGIN)
         self.add_fixed_in_frame_mobjects(lbl_converge)
-        self.play(FadeIn(lbl_converge), run_time=0.8)
+        self.play(Write(lbl_converge), run_time=0.8)
         self.wait(2.5)
         self.play(FadeOut(lbl_converge), run_time=0.7)
         self.remove(lbl_converge)
@@ -437,7 +437,7 @@ class Scene5Organization(ThreeDScene):
         ghost_anno.move_to(init_pos[4] + np.array([-0.10, 0.52, 0.0]))
         after_anno = Text("after", font_size=18, color=WINNER_COLOR)
         after_anno.move_to(cur_pos[0] + np.array([0.30, 0.52, 0.0]))
-        self.play(FadeIn(ghost_anno), FadeIn(after_anno), run_time=0.7)
+        self.play(Write(ghost_anno), Write(after_anno), run_time=0.7)
         self.wait(3.0)
 
         self.play(
@@ -458,7 +458,7 @@ class Scene5Organization(ThreeDScene):
                            font_size=36, color=WHITE)
         lbl_summary.move_to(ORIGIN)
         self.add_fixed_in_frame_mobjects(lbl_summary)
-        self.play(FadeIn(lbl_summary), run_time=0.9)
+        self.play(Write(lbl_summary), run_time=0.9)
         self.wait(3.5)
         self.play(FadeOut(lbl_summary), run_time=0.8)
         self.remove(lbl_summary)

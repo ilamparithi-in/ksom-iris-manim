@@ -240,7 +240,7 @@ class Scene7UMatrix(ThreeDScene):
             LaggedStart(*[FadeIn(d) for d in grid_nodes], lag_ratio=0.04),
             LaggedStart(*[FadeIn(d) for d in w_dots],    lag_ratio=0.04),
             LaggedStart(*[FadeIn(d) for d in data_dots], lag_ratio=0.006),
-            FadeIn(lbl1),
+            Write(lbl1),
             FadeIn(data_axes),
             run_time=3.0,
         )
@@ -280,7 +280,7 @@ class Scene7UMatrix(ThreeDScene):
         lbl3 = Text("Clusters appear as regions", font_size=28, color=WHITE)
         lbl3.to_edge(UL, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl3)
-        self.play(FadeIn(lbl3), run_time=0.7)
+        self.play(Write(lbl3), run_time=0.7)
         self.wait(2.0)
 
         # ----------------------------------------------------------------
@@ -303,11 +303,11 @@ class Scene7UMatrix(ThreeDScene):
             grid_nodes[sj].animate.set_color(WHITE).scale(1.5),
             w_dots[si].animate.set_color(WHITE).scale(1.5),
             w_dots[sj].animate.set_color(WHITE).scale(1.5),
-            FadeIn(lbl4a),
+            Write(lbl4a),
             run_time=0.8,
         )
         self.play(Create(w_line_same), run_time=0.7)
-        self.play(FadeIn(d_lbl_same), run_time=0.5)
+        self.play(Write(d_lbl_same), run_time=0.5)
         self.wait(1.8)
 
         self.play(
@@ -335,11 +335,11 @@ class Scene7UMatrix(ThreeDScene):
             grid_nodes[dj].animate.set_color(WHITE).scale(1.5),
             w_dots[di].animate.set_color(WHITE).scale(1.5),
             w_dots[dj].animate.set_color(WHITE).scale(1.5),
-            FadeIn(lbl4b),
+            Write(lbl4b),
             run_time=0.8,
         )
         self.play(Create(w_line_diff), run_time=0.7)
-        self.play(FadeIn(d_lbl_diff), run_time=0.5)
+        self.play(Write(d_lbl_diff), run_time=0.5)
         self.wait(1.8)
 
         self.play(
@@ -358,7 +358,7 @@ class Scene7UMatrix(ThreeDScene):
         lbl5 = Text("What if we measure this everywhere?", font_size=28, color=WHITE)
         lbl5.to_edge(UP, buff=0.3)
         self.add_fixed_in_frame_mobjects(lbl5)
-        self.play(FadeIn(lbl5), run_time=0.8)
+        self.play(Write(lbl5), run_time=0.8)
         self.wait(2.0)
         self.play(FadeOut(lbl5), run_time=0.5)
 
@@ -371,7 +371,7 @@ class Scene7UMatrix(ThreeDScene):
         lbl6 = Text("U-matrix: avg. distance to grid neighbours", font_size=26, color=WHITE)
         lbl6.to_edge(UL, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl6)
-        self.play(FadeIn(lbl6), run_time=0.6)
+        self.play(Write(lbl6), run_time=0.6)
 
         self.play(
             LaggedStart(
@@ -388,7 +388,7 @@ class Scene7UMatrix(ThreeDScene):
         lbl7 = Text("High values → boundaries", font_size=28, color=RED_B)
         lbl7.to_edge(UR, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl7)
-        self.play(FadeIn(lbl7), run_time=0.7)
+        self.play(Write(lbl7), run_time=0.7)
         self.wait(2.0)
         self.play(FadeOut(lbl6), FadeOut(lbl7), run_time=0.5)
 
@@ -457,7 +457,7 @@ class Scene7UMatrix(ThreeDScene):
         lbl9 = Text("Boundaries emerge from distances", font_size=28, color=WHITE)
         lbl9.to_edge(DOWN, buff=0.4)
         self.add_fixed_in_frame_mobjects(lbl9)
-        self.play(FadeIn(lbl9), run_time=0.8)
+        self.play(Write(lbl9), run_time=0.8)
         self.wait(3.0)
         self.play(FadeOut(lbl9), run_time=0.6)
 
@@ -467,147 +467,13 @@ class Scene7UMatrix(ThreeDScene):
         lbl10 = Text("Structure becomes visible", font_size=38, color=TEAL_B)
         lbl10.move_to(ORIGIN)
         self.add_fixed_in_frame_mobjects(lbl10)
-        self.play(FadeIn(lbl10), run_time=1.0)
+        self.play(Write(lbl10), run_time=1.0)
         self.wait(3.5)
         self.play(FadeOut(lbl10), run_time=0.8)
         self.wait(0.5)
 
-        # ================================================================
-        # EXTENSION — PARTS 7A–7G
-        # State: grid_nodes coloured by U-matrix (TEAL→RED),
-        #        w_dots coloured by cluster, data_dots by cluster @0.85,
-        #        all screen text cleared.
-        # ================================================================
-
-        # Pre-compute ordered boundary / interior node lists once
-        high_u_nodes = sorted(range(N_NODES), key=lambda i: -float(U_norm[i]))[:4]
-
         # ----------------------------------------------------------------
-        # 7A — NOTICE THE BOUNDARIES
-        # ----------------------------------------------------------------
-        lbl7a = Text("But what defines these boundaries?", font_size=28, color=WHITE)
-        lbl7a.to_edge(UR, buff=0.35)
-        self.add_fixed_in_frame_mobjects(lbl7a)
-        self.play(FadeIn(lbl7a), run_time=0.7)
-        # Pulse RED (high-U) boundary nodes
-        self.play(
-            LaggedStart(*[grid_nodes[i].animate.scale(1.6) for i in high_u_nodes],
-                        lag_ratio=0.15),
-            run_time=0.8,
-        )
-        self.play(
-            LaggedStart(*[grid_nodes[i].animate.scale(1 / 1.6) for i in high_u_nodes],
-                        lag_ratio=0.15),
-            run_time=0.6,
-        )
-        self.wait(1.5)
-        self.play(FadeOut(lbl7a), run_time=0.4)
-
-        # ----------------------------------------------------------------
-        # 7B — LOCAL DISTANCE DEMO
-        # ----------------------------------------------------------------
-        si, sj = same_pair
-        di, dj = diff_pair
-
-        # --- Same cluster → small distance ---
-        w_line_s = Line(w_pos(si), w_pos(sj), color=GREEN_B, stroke_width=2.5)
-        mid_s    = (w_pos(si) + w_pos(sj)) / 2.0 + np.array([0.0, 0.3, 0.0])
-        lbl_sd   = Text("small distance", font_size=18, color=GREEN_B)
-        lbl_sd.move_to(mid_s)
-        lbl7b1 = Text("Adjacent nodes inside same cluster", font_size=26, color=GREEN_B)
-        lbl7b1.to_edge(UR, buff=0.35)
-        self.add_fixed_in_frame_mobjects(lbl7b1)
-        self.play(
-            grid_nodes[si].animate.set_color(WHITE).scale(1.5),
-            grid_nodes[sj].animate.set_color(WHITE).scale(1.5),
-            w_dots[si].animate.set_color(WHITE).scale(1.5),
-            w_dots[sj].animate.set_color(WHITE).scale(1.5),
-            FadeIn(lbl7b1),
-            run_time=0.8,
-        )
-        self.play(Create(w_line_s), run_time=0.6)
-        self.play(FadeIn(lbl_sd), run_time=0.5)
-        self.wait(1.5)
-        self.play(
-            FadeOut(w_line_s), FadeOut(lbl_sd), FadeOut(lbl7b1),
-            grid_nodes[si].animate.set_color(u_color(si)).scale(1 / 1.5),
-            grid_nodes[sj].animate.set_color(u_color(sj)).scale(1 / 1.5),
-            w_dots[si].animate.set_color(CLUSTER_COLORS[int(node_labels[si])]).scale(1 / 1.5),
-            w_dots[sj].animate.set_color(CLUSTER_COLORS[int(node_labels[sj])]).scale(1 / 1.5),
-            run_time=0.6,
-        )
-
-        # --- Cross-boundary → large distance ---
-        w_line_d = Line(w_pos(di), w_pos(dj), color=RED_B, stroke_width=2.5)
-        mid_d    = (w_pos(di) + w_pos(dj)) / 2.0 + np.array([0.0, 0.3, 0.0])
-        lbl_ld   = Text("large distance", font_size=18, color=RED_B)
-        lbl_ld.move_to(mid_d)
-        lbl7b2 = Text("Neighbors very different", font_size=26, color=RED_B)
-        lbl7b2.to_edge(UR, buff=0.35)
-        self.add_fixed_in_frame_mobjects(lbl7b2)
-        self.play(
-            grid_nodes[di].animate.set_color(WHITE).scale(1.5),
-            grid_nodes[dj].animate.set_color(WHITE).scale(1.5),
-            w_dots[di].animate.set_color(WHITE).scale(1.5),
-            w_dots[dj].animate.set_color(WHITE).scale(1.5),
-            FadeIn(lbl7b2),
-            run_time=0.8,
-        )
-        self.play(Create(w_line_d), run_time=0.6)
-        self.play(FadeIn(lbl_ld), run_time=0.5)
-        self.wait(1.5)
-        self.play(
-            FadeOut(w_line_d), FadeOut(lbl_ld), FadeOut(lbl7b2),
-            grid_nodes[di].animate.set_color(u_color(di)).scale(1 / 1.5),
-            grid_nodes[dj].animate.set_color(u_color(dj)).scale(1 / 1.5),
-            w_dots[di].animate.set_color(CLUSTER_COLORS[int(node_labels[di])]).scale(1 / 1.5),
-            w_dots[dj].animate.set_color(CLUSTER_COLORS[int(node_labels[dj])]).scale(1 / 1.5),
-            run_time=0.6,
-        )
-        self.wait(0.3)
-
-        # ----------------------------------------------------------------
-        # 7C — GENERALIZATION
-        # ----------------------------------------------------------------
-        lbl7c = Text("What if we measure this everywhere?", font_size=28, color=WHITE)
-        lbl7c.to_edge(UP, buff=0.3)
-        self.add_fixed_in_frame_mobjects(lbl7c)
-        self.play(FadeIn(lbl7c), run_time=0.7)
-        self.wait(1.8)
-        self.play(FadeOut(lbl7c), run_time=0.5)
-
-        # ----------------------------------------------------------------
-        # 7D — CONFIRM U-MATRIX IS ALREADY VISIBLE
-        # ----------------------------------------------------------------
-        lbl7d = Text("U-matrix: colour = avg. neighbour distance", font_size=26, color=TEAL_B)
-        lbl7d.to_edge(UL, buff=0.35)
-        self.add_fixed_in_frame_mobjects(lbl7d)
-        self.play(FadeIn(lbl7d), run_time=0.7)
-        self.wait(2.0)
-
-        # ----------------------------------------------------------------
-        # 7E — INTERPRETATION
-        # ----------------------------------------------------------------
-        lbl7e = Text("High distance → boundary", font_size=28, color=RED_B)
-        lbl7e.to_edge(UR, buff=0.35)
-        self.add_fixed_in_frame_mobjects(lbl7e)
-        self.play(FadeIn(lbl7e), run_time=0.7)
-        # Pulse boundary nodes once more
-        self.play(
-            LaggedStart(*[grid_nodes[i].animate.scale(1.5) for i in high_u_nodes],
-                        lag_ratio=0.1),
-            run_time=0.7,
-        )
-        self.play(
-            LaggedStart(*[grid_nodes[i].animate.scale(1 / 1.5) for i in high_u_nodes],
-                        lag_ratio=0.1),
-            run_time=0.5,
-        )
-        self.wait(1.5)
-        self.play(FadeOut(lbl7d), FadeOut(lbl7e), run_time=0.4)
-
-        # ----------------------------------------------------------------
-        # 7F — LINK BACK TO DATA SEPARATION
+        # FINAL — LINK BACK TO DATA SEPARATION
         # ----------------------------------------------------------------
         bn = boundary_node
         # Find up to 2 distinct cluster labels in bn's grid neighbours
@@ -645,7 +511,7 @@ class Scene7UMatrix(ThreeDScene):
         lbl7f = Text("Clusters separated in data space too", font_size=26, color=WHITE)
         lbl7f.to_edge(UR, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl7f)
-        self.play(FadeIn(lbl7f), run_time=0.7)
+        self.play(Write(lbl7f), run_time=0.7)
         self.wait(2.0)
 
         # Restore full view
@@ -667,12 +533,12 @@ class Scene7UMatrix(ThreeDScene):
         self.wait(0.5)
 
         # ----------------------------------------------------------------
-        # 7G — FINAL CLEAN VIEW
+        # CLOSING VIEW
         # ----------------------------------------------------------------
         lbl7g = Text("Regions and boundaries together", font_size=30, color=WHITE)
         lbl7g.to_edge(DOWN, buff=0.4)
         self.add_fixed_in_frame_mobjects(lbl7g)
-        self.play(FadeIn(lbl7g), run_time=0.8)
+        self.play(Write(lbl7g), run_time=0.8)
         self.wait(3.5)
         self.play(FadeOut(lbl7g), run_time=0.8)
         self.wait(0.5)

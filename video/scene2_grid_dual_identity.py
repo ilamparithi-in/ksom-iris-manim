@@ -129,7 +129,7 @@ class Scene2GridDualIdentity(ThreeDScene):
         lbl_grid = Text("A regular 2D grid", font_size=28, color=BLUE_B)
         lbl_grid.to_corner(UL)
         self.add_fixed_in_frame_mobjects(lbl_grid)
-        self.play(FadeIn(lbl_grid), run_time=0.7)
+        self.play(Write(lbl_grid), run_time=0.7)
 
         # Row-by-row colour ripple: brighten → restore
         self.play(
@@ -175,7 +175,7 @@ class Scene2GridDualIdentity(ThreeDScene):
         lbl_data.to_corner(UR)
         self.add_fixed_in_frame_mobjects(lbl_data)
 
-        self.play(FadeIn(lbl_data), FadeIn(axes_3d), run_time=1.2)
+        self.play(Write(lbl_data), FadeIn(axes_3d), run_time=1.2)
         self.play(
             LaggedStart(*[FadeIn(d) for d in data_dots], lag_ratio=0.012),
             run_time=2.5,
@@ -257,14 +257,13 @@ class Scene2GridDualIdentity(ThreeDScene):
         lbl_left.to_corner(DL)
         lbl_right.to_corner(DR)
 
-        # Set opacity=0 before adding so they are invisible until FadeIn plays
-        lbl_dual.set_opacity(0)
-        lbl_left.set_opacity(0)
-        lbl_right.set_opacity(0)
-        self.add_fixed_in_frame_mobjects(lbl_dual, lbl_left, lbl_right)
-        self.play(FadeIn(lbl_dual), run_time=0.8)
+        # Add each label to the HUD immediately before animating it,
+        # so there is no gap between add_fixed_in_frame_mobjects and Write.
+        self.add_fixed_in_frame_mobjects(lbl_dual)
+        self.play(Write(lbl_dual), run_time=0.8)
+        self.add_fixed_in_frame_mobjects(lbl_left, lbl_right)
         self.play(
-            LaggedStart(FadeIn(lbl_left), FadeIn(lbl_right), lag_ratio=0.5),
+            LaggedStart(Write(lbl_left), Write(lbl_right), lag_ratio=0.5),
             run_time=1.2,
         )
         self.wait(1.5)      # PAUSE — dual identity absorbed
@@ -345,10 +344,12 @@ class Scene2GridDualIdentity(ThreeDScene):
         idx_lbl  = MathTex(r"i = \text{grid index}", font_size=30, color=GREY_A)
         idx_lbl.next_to(math_lbl, UP, buff=0.20)
 
-        self.add_fixed_in_frame_mobjects(math_lbl, idx_lbl)
-        self.play(FadeIn(math_lbl), run_time=0.9)
+        # Add each label right before its own Write call.
+        self.add_fixed_in_frame_mobjects(math_lbl)
+        self.play(Write(math_lbl), run_time=0.9)
         self.wait(0.4)
-        self.play(FadeIn(idx_lbl),  run_time=0.7)
+        self.add_fixed_in_frame_mobjects(idx_lbl)
+        self.play(Write(idx_lbl),  run_time=0.7)
 
         # ── Final slow ambient rotation ───────────────────────────────────────
         self.begin_ambient_camera_rotation(rate=0.08, about="theta")

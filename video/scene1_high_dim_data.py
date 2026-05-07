@@ -40,7 +40,7 @@ class Scene1HighDimData(ThreeDScene):
         """Cross-fade the dimension overlay from old_lbl to a new value of n."""
         new_lbl = self._dim_label(new_n)
         self.add_fixed_in_frame_mobjects(new_lbl)
-        self.play(FadeOut(old_lbl), FadeIn(new_lbl), run_time=rt)
+        self.play(FadeOut(old_lbl), Write(new_lbl), run_time=rt)
         self.remove(old_lbl)
         return new_lbl
 
@@ -72,7 +72,7 @@ class Scene1HighDimData(ThreeDScene):
         dim_lbl = self._dim_label("1")
         self.add_fixed_in_frame_mobjects(dim_lbl)
 
-        self.play(FadeIn(nline), FadeIn(dim_lbl), run_time=0.9)
+        self.play(FadeIn(nline), Write(dim_lbl), run_time=0.9)
         self.play(
             LaggedStart(*[FadeIn(d) for d in dots_1d], lag_ratio=0.18),
             run_time=1.5,
@@ -191,7 +191,7 @@ class Scene1HighDimData(ThreeDScene):
         banner = Text("4D  →  10D  →  100D", font_size=40, color=YELLOW_B)
         banner.to_edge(UP, buff=0.35)
         self.add_fixed_in_frame_mobjects(banner)
-        self.play(FadeIn(banner), run_time=0.8)
+        self.play(Write(banner), run_time=0.8)
         self.wait(0.7)
 
         # Jitter 80 random points — "this is just a projection" effect.

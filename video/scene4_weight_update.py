@@ -152,7 +152,7 @@ class Scene4WeightUpdate(ThreeDScene):
             LaggedStart(*[FadeIn(d) for d in w_dots],    lag_ratio=0.12),
             run_time=1.0,
         )
-        self.play(FadeIn(inp_dot), FadeIn(inp_lbl), run_time=0.6)
+        self.play(FadeIn(inp_dot), Write(inp_lbl), run_time=0.6)
 
         bmu_g_idx = CAND_GRID_IDX[BMU_IDX]   # = 5
 
@@ -192,7 +192,7 @@ class Scene4WeightUpdate(ThreeDScene):
                                 font_size=28, color=WINNER_COLOR)
         lbl_winner_moves.to_edge(UL, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_winner_moves)
-        self.play(FadeIn(lbl_winner_moves), run_time=0.6)
+        self.play(Write(lbl_winner_moves), run_time=0.6)
         self.wait(1.2)
 
         # ====================================================================
@@ -228,7 +228,7 @@ class Scene4WeightUpdate(ThreeDScene):
         lbl_neighbors = Text("Neighbors move too", font_size=28, color=TEAL_B)
         lbl_neighbors.to_edge(UR, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_neighbors)
-        self.play(FadeIn(lbl_neighbors), run_time=0.6)
+        self.play(Write(lbl_neighbors), run_time=0.6)
 
         # Colorize every grid node by its h value from the BMU grid node
         bmu_rc = grid_row_col(bmu_g_idx)
@@ -248,7 +248,15 @@ class Scene4WeightUpdate(ThreeDScene):
             w_dots[i].animate.set_opacity(0.85).set_color(NEIGHBOR_COLOR)
             for i in range(len(w_dots)) if i != BMU_IDX
         ]
-        self.play(*grid_color_anims, *restore_w, run_time=1.8)
+        # Camera tilts lower to reveal more 3-D depth, combined with the
+        # neighbourhood colouring so both happen in one fluid move.
+        self.stop_ambient_camera_rotation()
+        self.move_camera(
+            phi=45 * DEGREES, theta=-65 * DEGREES,
+            run_time=1.8,
+            added_anims=[*grid_color_anims, *restore_w],
+        )
+        self.begin_ambient_camera_rotation(rate=0.03, about='theta')
         self.wait(1.5)
 
         # ====================================================================
@@ -259,7 +267,7 @@ class Scene4WeightUpdate(ThreeDScene):
         lbl_h_short = MathTex(r"h_{ci}(t)", font_size=42, color=WHITE)
         lbl_h_short.to_edge(UP, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_h_short)
-        self.play(FadeIn(lbl_h_short), run_time=0.6)
+        self.play(Write(lbl_h_short), run_time=0.6)
         self.wait(1.0)
 
         # Expand to full Gaussian form
@@ -270,7 +278,7 @@ class Scene4WeightUpdate(ThreeDScene):
         )
         lbl_h_full.to_edge(UP, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_h_full)
-        self.play(FadeOut(lbl_h_short), FadeIn(lbl_h_full), run_time=1.0)
+        self.play(FadeOut(lbl_h_short), Write(lbl_h_full), run_time=1.0)
         self.remove(lbl_h_short)
         self.wait(1.5)
 
@@ -321,7 +329,7 @@ class Scene4WeightUpdate(ThreeDScene):
         far_idx = 3   # w3 -> grid 15 (furthest from BMU grid node 5)
         far_lbl = Text("far  ->  small change", font_size=18, color=GREY_A)
         far_lbl.move_to(cur_pos[far_idx] + np.array([0.0, 0.50, 0.0]))
-        self.play(FadeIn(far_lbl), run_time=0.5)
+        self.play(Write(far_lbl), run_time=0.5)
         self.wait(2.0)
         self.play(FadeOut(far_lbl), run_time=0.5)
 
@@ -336,7 +344,7 @@ class Scene4WeightUpdate(ThreeDScene):
         )
         lbl_update_eq.to_edge(DOWN, buff=0.40)
         self.add_fixed_in_frame_mobjects(lbl_update_eq)
-        self.play(FadeIn(lbl_update_eq), run_time=1.0)
+        self.play(Write(lbl_update_eq), run_time=1.0)
         self.wait(3.0)
 
         # ====================================================================
@@ -362,7 +370,7 @@ class Scene4WeightUpdate(ThreeDScene):
         lbl_step = Text("One training step", font_size=34, color=WHITE)
         lbl_step.move_to(ORIGIN)
         self.add_fixed_in_frame_mobjects(lbl_step)
-        self.play(FadeIn(lbl_step), run_time=0.7)
+        self.play(Write(lbl_step), run_time=0.7)
         self.wait(2.2)
 
         self.play(FadeOut(lbl_step), FadeOut(ghost_dots), run_time=0.8)

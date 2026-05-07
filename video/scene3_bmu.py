@@ -138,11 +138,9 @@ class Scene3BMU(ThreeDScene):
         ]
         self.play(*non_cand_anims, run_time=0.8)
 
-        # Light camera tilt for slight 3-D feel
-        self.move_camera(phi=15 * DEGREES, theta=-75 * DEGREES, zoom=1.1,
-                         run_time=1.5)
-        self.wait(0.4)
-        self.move_camera(phi=55 * DEGREES, theta=-60 * DEGREES, run_time=1.2)
+        # Single smooth tilt from top-down to isometric perspective
+        self.move_camera(phi=55 * DEGREES, theta=-60 * DEGREES, zoom=1.1,
+                         run_time=2.2)
         self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
         # ══════════════════════════════════════════════════════════════════════
@@ -155,7 +153,7 @@ class Scene3BMU(ThreeDScene):
 
         inp_lbl = Text("x", font_size=22, color=INPUT_COLOR)
         inp_lbl.move_to(INPUT_POS + np.array([0.0, 0.40, 0.0]))
-        self.play(FadeIn(inp_lbl), run_time=0.5)
+        self.play(Write(inp_lbl), run_time=0.5)
         self.wait(0.8)
         self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
@@ -191,7 +189,7 @@ class Scene3BMU(ThreeDScene):
             d_labels.append(lbl)
 
         self.play(
-            LaggedStart(*[FadeIn(l) for l in d_labels], lag_ratio=0.22),
+            LaggedStart(*[Write(l) for l in d_labels], lag_ratio=0.22),
             run_time=0.8,
         )
         self.wait(0.6)
@@ -205,19 +203,19 @@ class Scene3BMU(ThreeDScene):
         lbl_compare = Text("Compare distances", font_size=28, color=GREY_A)
         lbl_compare.to_edge(UL, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_compare)
-        self.play(FadeIn(lbl_compare), run_time=0.6)
+        self.play(Write(lbl_compare), run_time=0.6)
 
         # TOP RIGHT
         lbl_wins = Text("Closest wins", font_size=28, color=GREY_A)
         lbl_wins.to_edge(UR, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_wins)
-        self.play(FadeIn(lbl_wins), run_time=0.6)
+        self.play(Write(lbl_wins), run_time=0.6)
 
         # BOTTOM
         lbl_formula = MathTex(r"\| x - w_i \|", font_size=34, color=GREY_A)
         lbl_formula.to_edge(DOWN, buff=0.40)
         self.add_fixed_in_frame_mobjects(lbl_formula)
-        self.play(FadeIn(lbl_formula), run_time=0.6)
+        self.play(Write(lbl_formula), run_time=0.6)
 
         self.wait(2.0)
         self.stop_ambient_camera_rotation()
@@ -250,7 +248,7 @@ class Scene3BMU(ThreeDScene):
 
         winner_lbl = Text("winner", font_size=20, color=WINNER_COLOR)
         winner_lbl.move_to(CAND_POSITIONS[win_idx] + np.array([0.0, 0.44, 0.0]))
-        self.play(FadeIn(winner_lbl), run_time=0.5)
+        self.play(Write(winner_lbl), run_time=0.5)
         self.wait(1.2)
         self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
@@ -278,7 +276,7 @@ class Scene3BMU(ThreeDScene):
             (GRID_POSITIONS[g_idx] + CAND_POSITIONS[win_idx]) / 2
             + np.array([0.0, 0.40, 0.0])
         )
-        self.play(FadeIn(same_node_lbl), run_time=0.5)
+        self.play(Write(same_node_lbl), run_time=0.5)
         self.wait(1.5)
         self.begin_ambient_camera_rotation(rate=0.03, about='theta')
 
@@ -295,7 +293,7 @@ class Scene3BMU(ThreeDScene):
                          font_size=36, color=WHITE)
         lbl_eq.to_edge(UP, buff=0.35)
         self.add_fixed_in_frame_mobjects(lbl_eq)
-        self.play(FadeIn(lbl_eq), run_time=0.8)
+        self.play(Write(lbl_eq), run_time=0.8)
         self.wait(2.5)
         self.stop_ambient_camera_rotation()
 
@@ -327,6 +325,6 @@ class Scene3BMU(ThreeDScene):
         lbl_bmu = Text("Best Matching Unit", font_size=40, color=WHITE)
         lbl_bmu.move_to(ORIGIN)
         self.add_fixed_in_frame_mobjects(lbl_bmu)
-        self.play(FadeIn(lbl_bmu), run_time=1.0)
+        self.play(Write(lbl_bmu), run_time=1.0)
 
         self.wait(2.5)
